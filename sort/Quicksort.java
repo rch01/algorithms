@@ -13,7 +13,6 @@ import java.util.Arrays;
  */
 
 public class Quicksort {
-
     private static int swapCount = 0;
 
     private void printPartition(String s, int[] a, int lo, int hi) {
@@ -34,7 +33,6 @@ public class Quicksort {
     }
 
     private int median(int[] a, int lo, int hi) {
-        System.out.println("median");
         final int m = (lo + hi) / 2; // this could result in an integer overflow - https://research.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html
 
         if (a[lo] > a[m]) swap(a, lo, m);
@@ -53,7 +51,6 @@ public class Quicksort {
      * @return index of pivot, which is now in its final place within array
      */
     private int partitionLomuto(int[] a, int lo, int hi) {
-        System.out.println("partitionLomuto");
         final int pivotIndex = median(a, lo, hi);
         final int pivot = a[pivotIndex];
         int i = lo - 1;
@@ -66,12 +63,10 @@ public class Quicksort {
         }
         swap(a, ++i, hi); // pivot moved back to rightful place
 
-        System.out.println("Pivot: " + pivot);
         return i;
     }
 
     private int partitionHoare(int[] a, int lo, int hi) {
-        System.out.println("partitionHoare");
         final int pivotIndex = median(a, lo, hi);
         final int pivot = a[pivotIndex];
         int i = lo - 1;
@@ -92,18 +87,9 @@ public class Quicksort {
     }
 
     private void qsort(int[] a, int start, int end) {
-        printPartition("\nqsort before partition: ", a, start, end);
         if (start >= end) return; // base case: if start and end index cross, then the array has been sorted and can be returned.
 
         final int i = partitionHoare(a, start, end);
-        //final int i = partitionLomuto(a, start, end);
-
-        System.out.println("Pivot index: " + i);
-        printPartition("After partition: ", a, start, end);
-
-        final int lomutoEnd = i - 1;
-        final int lomutoStart = i + 1;
-
         qsort(a, start, i);
         qsort(a, i + 1, end);
     }
@@ -114,24 +100,20 @@ public class Quicksort {
      * @return sorted array of integers
      */
     public int[] sort(int[] a) {
-        System.out.println("sort");
         qsort(a, 0, a.length - 1);
         return a;
     }
 
     public static void main(String [] qs) {
-        int [] e1 = {2, 6, 5, 9, 4, 1, 7};
-        int [] e2 = {9, 6, 5, 0, 8, 2, 4, 7};
-        int [] e3 = {4, 3, 2, 1};
-        int [] e4 = {1, 2, 3, 4};
-        int [] e5 = {3, 1, 4, 5, 9, 1, 2, 6, 8, 5, 7};
-        int [] e6 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+        int [] e1 = {9, 6, 5, 0, 8, 2, 4, 7};
+        int [] e2 = {4, 3, 2, 1};
+        int [] e3 = {1, 2, 3, 4};
+        int [] e4 = {3, 1, 4, 5, 9, 1, 2, 6, 8, 5, 7};
+        int [] e5 = {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
+        int [] e6 = {};
 
-        //System.out.println(new Quicksort().partitionLomuto(e5, 0, e5.length - 1));
-        //System.out.println(new Quicksort().partitionHoare(e5, 0, e5.length - 1));
-
-        System.out.println("\nUnsorted array: " + Arrays.toString(e3) +
-                            "\nSorted array: " + Arrays.toString(new Quicksort().sort(e3)) +
-                            "\nSwap count: " + swapCount);
+        System.out.println("\nUnsorted: " + Arrays.toString(e4) +
+                            "\nSorted: " + Arrays.toString(new Quicksort().sort(e4)) +
+                            "\nSwaps: " + swapCount);
     }
 }
